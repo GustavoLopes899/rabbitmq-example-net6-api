@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.API.Endpoints;
 using RabbitMQ.Application.Configurations;
 using RabbitMQ.Infra.DependencyInjection;
 
@@ -25,6 +26,7 @@ public static class Program
         }
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.ConfigureEndpoints();
 
         app.Run();
     }
