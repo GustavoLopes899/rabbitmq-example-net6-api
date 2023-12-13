@@ -1,0 +1,1 @@
+# rabbitmq-example-net6-api
