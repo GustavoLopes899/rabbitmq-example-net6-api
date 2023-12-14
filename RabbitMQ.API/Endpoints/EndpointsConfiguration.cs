@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using RabbitMQ.Application.Consumer;
 using RabbitMQ.Application.Producer;
 using RabbitMQ.Application.Queue;
 using RabbitMQ.Models.Models;
@@ -30,6 +31,19 @@ public static class EndpointsConfiguration
             {
                 sendMessageUsecase.SendMessage(messageInformation);
                 return Results.Ok($"Message was sended to queue {messageInformation.QueueName}!");
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+        });
+
+        app.MapGet("/message/read", (IReadMessageUsecase readMessageUsecase, string queueName, int limit) =>
+        {
+            try
+            {
+                var response = readMessageUsecase.ReadMessage(queueName, limit);
+                return Results.Ok(response);
             }
             catch (Exception ex)
             {

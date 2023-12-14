@@ -10,8 +10,6 @@ namespace RabbitMQ.Application.Producer;
 public class SendMessageUsecase : ISendMessageUsecase
 {
     private readonly RabbitMQConfiguration _configuration;
-    private const string EXCHANGE_NAME = "exampleExchange";
-    private const string EXCHANGE_KEY = "exampleExchangeKey";
 
     public SendMessageUsecase(IOptions<RabbitMQConfiguration> configuration)
     {
@@ -27,8 +25,10 @@ public class SendMessageUsecase : ISendMessageUsecase
         var properties = model.CreateBasicProperties();
         properties.Persistent = false;
         byte[] messagebuffer = Encoding.Default.GetBytes(messageInformation.Message);
-        model.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Direct);
-        model.QueueBind(messageInformation.QueueName, EXCHANGE_NAME, EXCHANGE_KEY);
-        model.BasicPublish(EXCHANGE_NAME, EXCHANGE_KEY, properties, messagebuffer);
+        string exchangeName = $"{messageInformation.QueueName}_exchange";
+        string exchangeKey = $"{messageInformation.QueueName}_exchange_key";
+        model.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+        model.QueueBind(messageInformation.QueueName, exchangeName, exchangeKey);
+        model.BasicPublish(exchangeName, exchangeKey, properties, messagebuffer);
     }
 }

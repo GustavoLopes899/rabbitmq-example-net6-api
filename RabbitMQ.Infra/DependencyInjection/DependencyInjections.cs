@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Application.Configurations;
+using RabbitMQ.Application.Consumer;
 using RabbitMQ.Application.Producer;
 using RabbitMQ.Application.Queue;
 
@@ -13,5 +14,6 @@ public static class DependencyInjections
         services.Configure<RabbitMQConfiguration>(configuration);
         services.AddScoped<IQueueCreateUsecase, QueueCreateUsecase>();
         services.AddScoped<ISendMessageUsecase, SendMessageUsecase>();
+        services.AddScoped<IReadMessageUsecase, ReadMessageUsecase>();
     }
 }
