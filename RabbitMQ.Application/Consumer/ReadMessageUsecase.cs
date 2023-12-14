@@ -22,11 +22,11 @@ public class ReadMessageUsecase : IReadMessageUsecase
     {
         var factory = new ConnectionFactory { HostName = _configuration.RabbitMqUrl };
         var connection = factory.CreateConnection();
-        var model = connection.CreateModel();
+        var channel = connection.CreateModel();
         List<string> messageList = new List<string>();
-        while (limit > 0 && model.MessageCount(queueName) > 0)
+        while (limit > 0 && channel.MessageCount(queueName) > 0)
         {
-            var data = model.BasicGet(queueName, true);
+            var data = channel.BasicGet(queueName, true);
             if (data != null)
             {
                 string message = Encoding.UTF8.GetString(data.Body.ToArray());

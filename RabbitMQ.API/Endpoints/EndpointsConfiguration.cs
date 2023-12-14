@@ -25,6 +25,19 @@ public static class EndpointsConfiguration
             }
         });
 
+        app.MapPost("/queues/delete", (IQueueDeleteUsecase queueDeleteUsecase, string queueName) =>
+        {
+            try
+            {
+                queueDeleteUsecase.DeleteQueue(queueName);
+                return Results.Ok($"Queue {queueName} deleted!");
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+        });
+
         app.MapPost("/message/send", (ISendMessageUsecase sendMessageUsecase, MessageInformation messageInformation) =>
         {
             try

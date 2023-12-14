@@ -13,6 +13,7 @@ public static class DependencyInjections
     {
         services.Configure<RabbitMQConfiguration>(configuration);
         services.AddScoped<IQueueCreateUsecase, QueueCreateUsecase>();
+        services.AddScoped<IQueueDeleteUsecase, QueueDeleteUsecase>();
         services.AddScoped<ISendMessageUsecase, SendMessageUsecase>();
         services.AddScoped<IReadMessageUsecase, ReadMessageUsecase>();
     }

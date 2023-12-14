@@ -21,14 +21,14 @@ public class SendMessageUsecase : ISendMessageUsecase
     {
         var factory = new ConnectionFactory { HostName = _configuration.RabbitMqUrl };
         var connection = factory.CreateConnection();
-        var model = connection.CreateModel();
-        var properties = model.CreateBasicProperties();
+        var channel = connection.CreateModel();
+        var properties = channel.CreateBasicProperties();
         properties.Persistent = false;
         byte[] messagebuffer = Encoding.Default.GetBytes(messageInformation.Message);
         string exchangeName = $"{messageInformation.QueueName}_exchange";
         string exchangeKey = $"{messageInformation.QueueName}_exchange_key";
-        model.ExchangeDeclare(exchangeName, ExchangeType.Direct);
-        model.QueueBind(messageInformation.QueueName, exchangeName, exchangeKey);
-        model.BasicPublish(exchangeName, exchangeKey, properties, messagebuffer);
+        channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+        channel.QueueBind(messageInformation.QueueName, exchangeName, exchangeKey);
+        channel.BasicPublish(exchangeName, exchangeKey, properties, messagebuffer);
     }
 }
