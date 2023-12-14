@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RabbitMQ.Infra\RabbitMQ.Infra.csproj" />
+    <ProjectReference Include="..\RabbitMQ.Models\RabbitMQ.Models.csproj" />
   </ItemGroup>
 
 </Project>
