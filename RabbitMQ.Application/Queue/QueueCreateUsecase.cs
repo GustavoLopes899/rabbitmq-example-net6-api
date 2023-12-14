@@ -25,5 +25,9 @@ public class QueueCreateUsecase : IQueueCreateUsecase
                              exclusive: false,   // Determines if queue coexists with connection (case it closes, queue will be deleted)
                              autoDelete: false,  // Delete the queue in case no longer has consumers
                              arguments: null);   // General arguments
+        string exchangeName = $"{queueName}_exchange";
+        string exchangeKey = $"{queueName}_exchange_key";
+        channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+        channel.QueueBind(queueName, exchangeName, exchangeKey);
     }
 }

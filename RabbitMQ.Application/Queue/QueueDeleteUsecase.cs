@@ -21,5 +21,7 @@ public class QueueDeleteUsecase : IQueueDeleteUsecase
         using var rabbitConnection = factory.CreateConnection();
         using var channel = rabbitConnection.CreateModel();
         channel.QueueDelete(queueName);
+        string exchangeName = $"{queueName}_exchange";
+        channel.ExchangeDelete(exchangeName);
     }
 }

@@ -27,8 +27,6 @@ public class SendMessageUsecase : ISendMessageUsecase
         byte[] messagebuffer = Encoding.Default.GetBytes(messageInformation.Message);
         string exchangeName = $"{messageInformation.QueueName}_exchange";
         string exchangeKey = $"{messageInformation.QueueName}_exchange_key";
-        channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
-        channel.QueueBind(messageInformation.QueueName, exchangeName, exchangeKey);
         channel.BasicPublish(exchangeName, exchangeKey, properties, messagebuffer);
     }
 }
