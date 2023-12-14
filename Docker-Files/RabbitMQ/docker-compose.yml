@@ -13,9 +13,6 @@ services:
     networks:
       - rabbitmq-network
 
-volumes:
-    - /docker_conf/rabbitmq/data/:/var/lib/rabbitmq/
-
 networks:
   rabbitmq-network:
     driver: bridge
